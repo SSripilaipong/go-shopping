@@ -7,3 +7,6 @@ deploy:
 
 terraform-init:
 	cd terraform; ../script/init-terraform.sh
+
+test:
+	go test ./tests/...

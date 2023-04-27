@@ -1,14 +1,11 @@
 package main
 
 import (
-	"context"
 	"github.com/aws/aws-lambda-go/lambda"
+	lHandler "go-shopping/lambler/handler"
 )
 
-func HandleRequest(ctx context.Context, event any) (any, error) {
-	return event, nil
-}
-
 func main() {
-	lambda.Start(HandleRequest)
+	//lambda.Start(lambda.Handler)
+	lambda.Start(lHandler.Echo)
 }
