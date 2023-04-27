@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/aws/aws-lambda-go/lambda"
-	lHandler "go-shopping/lambler/handler"
+	appLambda "go-shopping/app/lambda"
 )
 
 func main() {
-	//lambda.Start(lambda.Handler)
-	lambda.Start(lHandler.Echo)
+	lambda.Start(appLambda.Handler)
+	//lambda.Start(lHandler.Echo)
 }
