@@ -6,8 +6,8 @@ import (
 	lHttp "go-shopping/lambler/http"
 )
 
-func newHttpFilter() lambler.Filter {
+func newHttpFilter(dep Dependency) lambler.Filter {
 	filter := lHttp.NewFilter()
-	filter.Include(inventoryHttp.NewRouter())
+	filter.Include(inventoryHttp.NewRouter(dep.Inventory))
 	return filter
 }

@@ -1,11 +1,22 @@
 package testing
 
 import (
+	"encoding/json"
 	"fmt"
 	gfun "go-shopping/go/func"
 	"go-shopping/lambler"
 	lHttp "go-shopping/lambler/http"
 )
+
+func HttpPostEventWithJsonBody(url string, body lambler.Json) lambler.Json {
+	bodyJson, err := json.Marshal(body)
+	if err != nil {
+		panic(err)
+	}
+	event := NewHttpPostEvent(url)
+	event["body"] = bodyJson
+	return event
+}
 
 func NewHttpPostEvent(url string) lambler.Json {
 	return lambler.Json{

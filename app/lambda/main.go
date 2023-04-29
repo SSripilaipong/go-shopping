@@ -4,8 +4,8 @@ import (
 	"go-shopping/lambler"
 )
 
-func New() lambler.Handler {
+func New(dep Dependency) lambler.Handler {
 	return lambler.New([]lambler.Filter{
-		newHttpFilter(),
+		newHttpFilter(dep),
 	})
 }

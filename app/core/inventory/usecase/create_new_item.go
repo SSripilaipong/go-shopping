@@ -1,0 +1,11 @@
+package usecase
+
+type CreateNewItemRequest struct {
+	Name        string
+	Description string
+	Quantity    int
+}
+type CreateNewItemResponse struct{}
+type CreateNewItemError interface{}
+
+type CreateNewItemFunc = func(CreateNewItemRequest) (CreateNewItemResponse, CreateNewItemError)
