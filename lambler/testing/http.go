@@ -14,7 +14,7 @@ func HttpPostEventWithJsonBody(url string, body lambler.Json) lambler.Json {
 		panic(err)
 	}
 	event := NewHttpPostEvent(url)
-	event["body"] = bodyJson
+	event["body"] = string(bodyJson)
 	return event
 }
 

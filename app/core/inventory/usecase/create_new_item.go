@@ -9,3 +9,9 @@ type CreateNewItemResponse struct{}
 type CreateNewItemError interface{}
 
 type CreateNewItemFunc = func(CreateNewItemRequest) (CreateNewItemResponse, CreateNewItemError)
+
+func CreateNewItem() CreateNewItemFunc {
+	return func(CreateNewItemRequest) (CreateNewItemResponse, CreateNewItemError) {
+		return CreateNewItemResponse{}, nil
+	}
+}

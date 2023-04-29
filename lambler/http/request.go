@@ -17,11 +17,11 @@ func JsonBody[T any](request *Request, target *T) error {
 		panic("invalid lambda event")
 	}
 	bodyAny := event["body"]
-	bodyString, isString := bodyAny.([]byte)
+	bodyBytes, isString := bodyAny.(string)
 	if !isString {
 		return fmt.Errorf("unprocessable entity")
 	}
-	if err := json.Unmarshal(bodyString, target); err != nil {
+	if err := json.Unmarshal([]byte(bodyBytes), target); err != nil {
 		return fmt.Errorf("unprocessable entity")
 	}
 	return nil
