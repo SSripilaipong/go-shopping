@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	lambda.Start(appLambda.Handler)
+	lambda.Start(appLambda.New())
 	//lambda.Start(lHandler.Echo)
 }

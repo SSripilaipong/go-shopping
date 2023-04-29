@@ -27,8 +27,12 @@ func NewHttpResponseFromJson(raw lambler.Json) (resp lHttp.Response, err error) 
 	return resp, nil
 }
 
-func HttpStatusIs(raw lambler.Json, status int) bool {
-	resp, err := NewHttpResponseFromJson(raw)
+func HttpStatusEquals(raw any, status int) bool {
+	data, ok := raw.(lambler.Json)
+	if !ok {
+		return false
+	}
+	resp, err := NewHttpResponseFromJson(data)
 	if err != nil {
 		return false
 	}
