@@ -31,7 +31,7 @@ func (f *filter) Filter(ctx context.Context, event any) lambler.Handler {
 	}
 
 	return func(context.Context, any) (any, error) {
-		return gfun.MarshalToMap(handler(request))
+		return gfun.MarshalToMap(handler(request).ToLambdaResponse())
 	}
 }
 

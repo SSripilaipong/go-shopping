@@ -2,11 +2,16 @@ package http
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 type Headers = map[string]string
 
-type Response struct {
+type LambdaResponseBuilder interface {
+	ToLambdaResponse() *LambdaResponse
+}
+
+type LambdaResponse struct {
 	StatusCode      int      `json:"statusCode"`
 	Headers         Headers  `json:"headers"`
 	Body            string   `json:"body"`
@@ -14,8 +19,12 @@ type Response struct {
 	IsBase64Encoded bool     `json:"isBase64Encoded"`
 }
 
-func (r *Response) MarshalJSON() ([]byte, error) {
-	type Struct Response
+func (r *LambdaResponse) ToLambdaResponse() *LambdaResponse {
+	return r
+}
+
+func (r *LambdaResponse) MarshalJSON() ([]byte, error) {
+	type Struct LambdaResponse
 
 	headers := r.Headers
 	if headers == nil {
@@ -36,4 +45,26 @@ func (r *Response) MarshalJSON() ([]byte, error) {
 		Cookies: cookies,
 		Struct:  (*Struct)(r),
 	})
+}
+
+type JsonResponse struct {
+	StatusCode int
+	Body       any
+	Headers    map[string]string
+	Cookies    []string
+}
+
+func (r JsonResponse) ToLambdaResponse() *LambdaResponse {
+	statusCode := r.StatusCode
+	if statusCode == 0 {
+		statusCode = 200
+	}
+	body, err := json.Marshal(r.Body)
+	if err != nil {
+		panic(fmt.Errorf("JsonResponse.ToLambdaResponse() failed to parse body: %w", err))
+	}
+	return &LambdaResponse{
+		StatusCode: statusCode,
+		Body:       string(body),
+	}
 }

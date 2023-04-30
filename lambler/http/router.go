@@ -15,7 +15,7 @@ func NewRouter() Router {
 
 func (r *router) HandlerFor(*Request) Handler {
 	for _, route := range r.routes {
-		return func(request *Request) *Response {
+		return func(request *Request) LambdaResponseBuilder {
 			return route.handler(request)
 		}
 	}

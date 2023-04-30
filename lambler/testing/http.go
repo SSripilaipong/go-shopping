@@ -31,21 +31,37 @@ func NewHttpPostEvent(url string) lambler.Json {
 	}
 }
 
-func NewHttpResponseFromJson(raw lambler.Json) (resp lHttp.Response, err error) {
-	if err = gfun.UnmarshalFromMap(raw, &resp); err != nil {
-		return lHttp.Response{}, fmt.Errorf("NewHttpResponseFromJson failed to unmarshal data: %w", err)
-	}
-	return resp, nil
+type TestHttpResponse struct {
+	statusCode int
+	body       string
 }
 
-func HttpStatusEquals(raw any, status int) bool {
-	data, ok := raw.(lambler.Json)
-	if !ok {
-		return false
-	}
-	resp, err := NewHttpResponseFromJson(data)
+func (r TestHttpResponse) StatusCode() int {
+	return r.statusCode
+}
+
+func (r TestHttpResponse) Json() (jsonBody lambler.Json) {
+	err := json.Unmarshal([]byte(r.body), &jsonBody)
 	if err != nil {
-		return false
+		panic(fmt.Errorf("TestHttpResponse.Json() failed to parse body to json: %w", err))
 	}
-	return resp.StatusCode == status
+	return jsonBody
+}
+
+func NewTestHttpResponse(raw any) TestHttpResponse {
+	jsonObj, ok := raw.(lambler.Json)
+	if !ok {
+		panic(fmt.Errorf("NewTestHttpResponse failed to unmarshal data: cannot cast data to json"))
+	}
+
+	fmt.Printf("%#v\n", jsonObj)
+	var resp lHttp.LambdaResponse
+	if err := gfun.UnmarshalFromMap(jsonObj, &resp); err != nil {
+		panic(fmt.Errorf("NewTestHttpResponse failed to unmarshal data: %w", err))
+	}
+
+	return TestHttpResponse{
+		statusCode: resp.StatusCode,
+		body:       resp.Body,
+	}
 }

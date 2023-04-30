@@ -6,14 +6,14 @@ import (
 	lHttp "go-shopping/lambler/http"
 )
 
-type jsonBody struct {
+type requestBody struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Quantity    int    `json:"quantity"`
 }
 
 func makeUsecaseRequest(request *lHttp.Request) *inventoryUsecase.CreateNewItemRequest {
-	var body jsonBody
+	var body requestBody
 	err := lHttp.JsonBody(request, &body)
 	if err != nil {
 		panic(fmt.Errorf("unhandled error: %w", err))

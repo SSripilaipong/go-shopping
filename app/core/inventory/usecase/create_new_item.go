@@ -5,7 +5,9 @@ type CreateNewItemRequest struct {
 	Description string
 	Quantity    int
 }
-type CreateNewItemResponse struct{}
+type CreateNewItemResponse struct {
+	Id string
+}
 type CreateNewItemError interface{}
 
 type CreateNewItemFunc = func(CreateNewItemRequest) (CreateNewItemResponse, CreateNewItemError)
