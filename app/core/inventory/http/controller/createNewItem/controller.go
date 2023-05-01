@@ -7,9 +7,12 @@ import (
 
 func New(execute usecase.CreateNewItemFunc) lHttp.Handler {
 	return func(request *lHttp.Request) lHttp.LambdaResponseBuilder {
-		usecaseRequest := *makeUsecaseRequest(request)
+		usecaseRequest, err := makeUsecaseRequest(request)
+		if err != nil {
+			return err.ToResponse()
+		}
 
-		resp, _ := execute(usecaseRequest)
+		resp, _ := execute(*usecaseRequest)
 
 		return makeHttpResponse(resp)
 	}

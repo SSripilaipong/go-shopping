@@ -17,7 +17,7 @@ func Test_should_return_status_created(t *testing.T) {
 
 	raw, _ := doValidRequest(handler)
 
-	assert.Equal(t, lTesting.NewTestHttpResponse(raw).StatusCode(), http.StatusCreated)
+	assert.Equal(t, http.StatusCreated, lTesting.NewTestHttpResponse(raw).StatusCode())
 }
 
 func Test_should_execute_create_new_item_usecase_with_payload(t *testing.T) {
@@ -44,7 +44,19 @@ func Test_should_respond_with_item_id(t *testing.T) {
 
 	raw, _ := doValidRequest(handler)
 
-	assert.Equal(t, lTesting.NewTestHttpResponse(raw).Json(), lambler.Json{
+	assert.Equal(t, lambler.Json{
 		"id": "INV-ITM-1234",
+	}, lTesting.NewTestHttpResponse(raw).Json())
+}
+
+func Test_should_validate_json_body(t *testing.T) {
+	handler := controllerTest.NewHandlerWithInventoryDep(inventoryHttp.Dependency{
+		CreateNewItemUsecase: (&mock.CreateNewItemUsecase{
+			WillReturn: inventoryUsecase.CreateNewItemResponse{Id: "INV-ITM-1234"},
+		}).New(),
 	})
+
+	raw, _ := doValidRequestWithPayload(handler, lambler.Json{"a": 1, "b": "xxx"})
+
+	assert.Equal(t, http.StatusUnprocessableEntity, lTesting.NewTestHttpResponse(raw).StatusCode())
 }

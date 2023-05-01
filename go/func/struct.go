@@ -2,7 +2,9 @@ package gfun
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"reflect"
 )
 
 func UnmarshalFromMap[T any](raw map[string]any, target *T) error {
@@ -30,4 +32,32 @@ func MarshalToMap[T any](target T) (result map[string]any, err error) {
 	}
 
 	return result, nil
+}
+
+func CheckAllStructFieldsSet[T any](body T) (bool, error) {
+	structType := reflect.TypeOf(body)
+	if structType.Kind() != reflect.Struct {
+		return false, errors.New("unexpected error")
+	}
+
+	structVal := reflect.ValueOf(body)
+	fieldNum := structVal.NumField()
+
+	for i := 0; i < fieldNum; i++ {
+		field := structVal.Field(i)
+		isSet := field.IsValid() && !field.IsZero()
+
+		if !isSet {
+			return false, nil
+		}
+	}
+	return true, nil
+}
+
+func AllStructFieldsSet[T any](body T) bool {
+	allSet, err := CheckAllStructFieldsSet(body)
+	if err != nil {
+		panic("unexpected error")
+	}
+	return allSet
 }
