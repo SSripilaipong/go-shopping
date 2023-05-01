@@ -18,7 +18,7 @@ func JsonBody[T any](request *Request, target *T) Error {
 	bodyAny := event["body"]
 	bodyBytes, isString := bodyAny.(string)
 	if !isString {
-		panic("invalid lambda http event")
+		return BadRequestResponse()
 	}
 	if err := json.Unmarshal([]byte(bodyBytes), target); err != nil {
 		return BadRequestResponse()
