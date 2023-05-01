@@ -61,3 +61,12 @@ func AllStructFieldsSet[T any](body T) bool {
 	}
 	return allSet
 }
+
+func EqualsJsonUnmarshal[T any](obj T, raw []byte) bool {
+	var unmarshalled T
+	err := json.Unmarshal(raw, &unmarshalled)
+	if err != nil {
+		return false
+	}
+	return reflect.DeepEqual(obj, unmarshalled)
+}

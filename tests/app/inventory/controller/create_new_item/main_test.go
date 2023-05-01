@@ -6,8 +6,8 @@ import (
 	inventoryUsecase "go-shopping/app/core/inventory/usecase"
 	"go-shopping/lambler"
 	lTesting "go-shopping/lambler/testing"
-	controllerTest "go-shopping/tests/inventory/controller"
-	"go-shopping/tests/inventory/controller/mock"
+	controllerTest "go-shopping/tests/app/inventory/controller"
+	"go-shopping/tests/app/inventory/controller/mock"
 	"net/http"
 	"testing"
 )

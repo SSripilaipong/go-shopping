@@ -6,7 +6,7 @@ import (
 	"go-shopping/app/lambda"
 	"go-shopping/lambler"
 	"go-shopping/tests"
-	"go-shopping/tests/inventory/controller/mock"
+	"go-shopping/tests/app/inventory/controller/mock"
 )
 
 func NewHandlerWithMocks() lambler.Handler {

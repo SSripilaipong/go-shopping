@@ -29,3 +29,7 @@ func (r *requestError) ToResponse() LambdaResponseBuilder {
 func UnprocessableEntityResponse() Error {
 	return &requestError{httpStatusCode: http.StatusUnprocessableEntity, message: "unprocessable entity"}
 }
+
+func BadRequestResponse() Error {
+	return &requestError{httpStatusCode: http.StatusBadRequest, message: "bad request"}
+}
