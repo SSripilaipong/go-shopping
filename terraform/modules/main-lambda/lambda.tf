@@ -13,6 +13,12 @@ resource "aws_lambda_function" "main" {
   source_code_hash = data.archive_file.main.output_base64sha256
 
   runtime = "go1.x"
+
+  environment {
+    variables = {
+      INVENTORY_ITEM_TABLE_NAME = var.inventory-itemTableName
+    }
+  }
 }
 
 resource "aws_lambda_function_url" "main" {
