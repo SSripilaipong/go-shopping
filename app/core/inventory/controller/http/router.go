@@ -1,7 +1,7 @@
 package http
 
 import (
-	"go-shopping/app/core/inventory/http/controller/createNewItem"
+	"go-shopping/app/core/inventory/controller/http/createNewItem"
 	lHttp "go-shopping/lambler/http"
 )
 

@@ -2,7 +2,7 @@ package create_new_item
 
 import (
 	"github.com/stretchr/testify/assert"
-	inventoryHttp "go-shopping/app/core/inventory/http"
+	inventoryHttp "go-shopping/app/core/inventory/controller/http"
 	inventoryUsecase "go-shopping/app/core/inventory/usecase"
 	"go-shopping/lambler"
 	lTesting "go-shopping/lambler/testing"

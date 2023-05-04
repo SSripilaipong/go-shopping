@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/aws/aws-lambda-go/lambda"
-	inventoryHttp "go-shopping/app/core/inventory/http"
+	inventoryHttp "go-shopping/app/core/inventory/controller/http"
 	"go-shopping/app/core/inventory/usecase"
 	appLambda "go-shopping/app/lambda"
 	"go-shopping/lambler"

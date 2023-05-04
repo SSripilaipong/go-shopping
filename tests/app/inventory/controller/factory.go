@@ -1,7 +1,7 @@
 package controller
 
 import (
-	inventoryHttp "go-shopping/app/core/inventory/http"
+	inventoryHttp "go-shopping/app/core/inventory/controller/http"
 	"go-shopping/app/core/inventory/usecase"
 	"go-shopping/app/lambda"
 	"go-shopping/lambler"

@@ -1,7 +1,7 @@
 package lambda
 
 import (
-	inventoryHttp "go-shopping/app/core/inventory/http"
+	inventoryHttp "go-shopping/app/core/inventory/controller/http"
 	"go-shopping/lambler"
 	lHttp "go-shopping/lambler/http"
 )
