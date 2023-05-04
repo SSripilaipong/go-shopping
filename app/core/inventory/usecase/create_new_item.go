@@ -1,5 +1,7 @@
 package usecase
 
+import inventoryDomain "go-shopping/app/core/inventory/domain"
+
 type CreateNewItemRequest struct {
 	Name        string
 	Description string
@@ -12,8 +14,19 @@ type CreateNewItemError interface{}
 
 type CreateNewItemFunc = func(CreateNewItemRequest) (CreateNewItemResponse, CreateNewItemError)
 
-func CreateNewItem() CreateNewItemFunc {
-	return func(CreateNewItemRequest) (CreateNewItemResponse, CreateNewItemError) {
+func CreateNewItem(itemRepo ItemRepo, generateId GenerateId) CreateNewItemFunc {
+	return func(request CreateNewItemRequest) (CreateNewItemResponse, CreateNewItemError) {
+		if err := itemRepo.Create(func() *inventoryDomain.Item {
+			return &inventoryDomain.Item{
+				Id:          generateId(),
+				Name:        request.Name,
+				Description: request.Description,
+				Quantity:    request.Quantity,
+			}
+		}); err != nil {
+			panic(err)
+		}
+
 		return CreateNewItemResponse{}, nil
 	}
 }

@@ -16,7 +16,7 @@ func main() {
 func NewAppHandler() lambler.Handler {
 	return appLambda.New(appLambda.Dependency{
 		Inventory: inventoryHttp.Dependency{
-			CreateNewItemUsecase: usecase.CreateNewItem(),
+			CreateNewItemUsecase: usecase.CreateNewItem(nil, nil),
 		},
 	})
 }
