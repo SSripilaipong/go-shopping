@@ -16,8 +16,9 @@ type CreateNewItemFunc = func(CreateNewItemRequest) (CreateNewItemResponse, Crea
 
 func CreateNewItem(itemRepo ItemRepo, generateId GenerateId) CreateNewItemFunc {
 	return func(request CreateNewItemRequest) (CreateNewItemResponse, CreateNewItemError) {
-		id := generateId()
+		var id string
 		if err := itemRepo.Create(func() *inventoryDomain.Item {
+			id = generateId()
 			return &inventoryDomain.Item{
 				Id:          id,
 				Name:        request.Name,

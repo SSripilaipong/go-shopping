@@ -25,7 +25,7 @@ func Test_should_create_item_in_item_repo_with_generated_id(t *testing.T) {
 		Name:        "My Product",
 		Description: "My brand-new product",
 		Quantity:    555,
-	}, itemRepo.Create_factory())
+	}, itemRepo.Create_finalResult)
 }
 
 func Test_should_return_response_with_generated_id(t *testing.T) {
@@ -36,4 +36,16 @@ func Test_should_return_response_with_generated_id(t *testing.T) {
 	response, _ := doValidExecute(usecase)
 
 	assert.Equal(t, inventoryUsecase.CreateNewItemResponse{Id: "INV-ITM-9999"}, response)
+}
+
+func Test_should_return_response_with_latest_generated_id(t *testing.T) {
+	usecase := newUsecaseWithItemRepoAndGenerateId(&mock.ItemRepo{
+		Create_calls: 2,
+	}, (&mock.GenerateId{
+		WillReturns: []string{"INV-ITM-1234", "INV-ITM-5678"},
+	}).New())
+
+	response, _ := doValidExecute(usecase)
+
+	assert.Equal(t, inventoryUsecase.CreateNewItemResponse{Id: "INV-ITM-5678"}, response)
 }
