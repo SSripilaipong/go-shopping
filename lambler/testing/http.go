@@ -8,17 +8,21 @@ import (
 	lHttp "go-shopping/lambler/http"
 )
 
+func HttpPostEventWithBody(url string, body string) lambler.Json {
+	event := HttpPostEvent(url)
+	event["body"] = body
+	return event
+}
+
 func HttpPostEventWithJsonBody(url string, body lambler.Json) lambler.Json {
 	bodyJson, err := json.Marshal(body)
 	if err != nil {
 		panic(err)
 	}
-	event := NewHttpPostEvent(url)
-	event["body"] = string(bodyJson)
-	return event
+	return HttpPostEventWithBody(url, string(bodyJson))
 }
 
-func NewHttpPostEvent(url string) lambler.Json {
+func HttpPostEvent(url string) lambler.Json {
 	return lambler.Json{
 		"version": "2.0",
 		"rawPath": url,
@@ -54,7 +58,6 @@ func NewTestHttpResponse(raw any) TestHttpResponse {
 		panic(fmt.Errorf("NewTestHttpResponse failed to unmarshal data: cannot cast data to json"))
 	}
 
-	fmt.Printf("%#v\n", jsonObj)
 	var resp lHttp.LambdaResponse
 	if err := gfun.UnmarshalFromMap(jsonObj, &resp); err != nil {
 		panic(fmt.Errorf("NewTestHttpResponse failed to unmarshal data: %w", err))
