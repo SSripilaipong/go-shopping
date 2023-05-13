@@ -7,5 +7,5 @@ import (
 
 func main() {
 	lambda.Start(app.NewAppHandler())
-	//lambda.Start(lambler.EchoHandler)
+	//lambda.Start(lambler.PrintHandler)
 }

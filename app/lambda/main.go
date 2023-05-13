@@ -7,5 +7,6 @@ import (
 func New(dep Dependency) lambler.Handler {
 	return lambler.New([]lambler.Filter{
 		newHttpFilter(dep),
+		lambler.NewPrintFilter(),
 	})
 }
