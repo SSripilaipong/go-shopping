@@ -1,7 +1,7 @@
 data "archive_file" "main" {
   type        = "zip"
-  source_file = "../build/main"
-  output_path = "../build/main.zip"
+  source_file = var.binary_file_path
+  output_path = var.zip_file_path
 }
 
 resource "aws_lambda_function" "main" {
