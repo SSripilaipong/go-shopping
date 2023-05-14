@@ -1,4 +1,4 @@
-package dynamodbevent
+package ddbevent
 
 type Router interface {
 	HandlerFor(record *Record) Handler

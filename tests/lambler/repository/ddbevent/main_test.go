@@ -1,10 +1,10 @@
-package dynamodbevent
+package ddbevent
 
 import (
 	"context"
 	"github.com/stretchr/testify/assert"
 	"go-shopping/lambler"
-	"go-shopping/lambler/repository/dynamodbevent"
+	"go-shopping/lambler/repository/ddbevent"
 	lTesting "go-shopping/lambler/testing"
 	"testing"
 )
@@ -12,12 +12,12 @@ import (
 func Test_should_call_handler(t *testing.T) {
 	var handlerIsCalled bool
 
-	router := dynamodbevent.NewRouter()
-	router.Any(func(request *dynamodbevent.Record) {
+	router := ddbevent.NewRouter()
+	router.Any(func(request *ddbevent.Record) {
 		handlerIsCalled = true
 	})
 
-	filter := dynamodbevent.NewFilter()
+	filter := ddbevent.NewFilter()
 	filter.Include(router)
 	app := lambler.New([]lambler.Filter{filter})
 
