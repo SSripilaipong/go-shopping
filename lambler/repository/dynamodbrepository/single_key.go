@@ -4,6 +4,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+	"go-shopping/lambler"
 	"go-shopping/lambler/repository"
 
 	"log"
@@ -34,13 +35,17 @@ type singleKeyTable[E any] struct {
 	repository repository.SingleKeyRepository[E]
 }
 
-func NewSingleKeyTable[E any](client DynamodbClient, tableName string) repository.SingleKeyTable[E] {
+func NewSingleKeyTableWithClient[E any](client DynamodbClient, tableName string) repository.SingleKeyTable[E] {
 	return &singleKeyTable[E]{
 		repository: &singleKeyRepository[E]{
-			client:    client,
 			tableName: tableName,
+			client:    client,
 		},
 	}
+}
+
+func NewSingleKeyTable[E any](tableName string) repository.SingleKeyTable[E] {
+	return NewSingleKeyTableWithClient[E](lambler.GetDynamodbClient(), tableName)
 }
 
 func (t *singleKeyTable[E]) Repository() repository.SingleKeyRepository[E] {

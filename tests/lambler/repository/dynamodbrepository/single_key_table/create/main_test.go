@@ -16,7 +16,7 @@ func Test_should_put_marshalled_item(t *testing.T) {
 		B  int
 	}
 	client := &mock.DynamodbClient{}
-	repo := dynamodbrepository.NewSingleKeyTable[*Entity](client, "my-table").Repository()
+	repo := dynamodbrepository.NewSingleKeyTableWithClient[*Entity](client, "my-table").Repository()
 	_ = repo.Create(func() *Entity {
 		return &Entity{
 			Id: "1234",

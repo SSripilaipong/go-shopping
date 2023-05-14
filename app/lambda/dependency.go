@@ -2,7 +2,6 @@ package lambda
 
 import (
 	"go-shopping/app/core/inventory/inventoryController"
-	"go-shopping/lambler"
 )
 
 type dependency struct {
@@ -11,6 +10,6 @@ type dependency struct {
 
 func newDependencyFromConfig(config *Config) dependency {
 	return dependency{
-		Inventory: inventoryController.NewRuntimeDependency(lambler.GetDynamodbClient(), config.Inventory),
+		Inventory: inventoryController.NewRuntimeDependency(config.Inventory),
 	}
 }

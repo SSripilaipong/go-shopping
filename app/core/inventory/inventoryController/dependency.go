@@ -1,7 +1,6 @@
 package inventoryController
 
 import (
-	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"go-shopping/app/core/inventory/adapter"
 	"go-shopping/app/core/inventory/domain"
 	"go-shopping/app/core/inventory/inventoryController/inventoryHttp"
@@ -21,10 +20,10 @@ func NewDependency(createNewItemUsecase usecase.CreateNewItemFunc) Dependency {
 	}
 }
 
-func NewRuntimeDependency(dynamodbClient *dynamodb.DynamoDB, config *Config) Dependency {
+func NewRuntimeDependency(config *Config) Dependency {
 	return NewDependency(
 		usecase.CreateNewItem(
-			dynamodbrepository.NewSingleKeyTable[*domain.Item](dynamodbClient, config.ItemTableName).Repository(),
+			dynamodbrepository.NewSingleKeyTable[*domain.Item](config.ItemTableName).Repository(),
 			adapter.GenerateItemId,
 		),
 	)
