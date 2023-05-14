@@ -1,9 +1,16 @@
 package lambda
 
 import (
-	inventoryHttp "go-shopping/app/core/inventory/controller/http"
+	"go-shopping/app/core/inventory/inventoryController"
+	"go-shopping/lambler"
 )
 
-type Dependency struct {
-	Inventory inventoryHttp.Dependency
+type dependency struct {
+	Inventory inventoryController.Dependency
+}
+
+func newDependencyFromConfig(config *Config) dependency {
+	return dependency{
+		Inventory: inventoryController.NewRuntimeDependency(lambler.GetDynamodbClient(), config.Inventory),
+	}
 }

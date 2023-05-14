@@ -2,7 +2,7 @@ package json_body
 
 import (
 	"github.com/stretchr/testify/assert"
-	gfun "go-shopping/go/func"
+	gfun "go-shopping/go/gfunc"
 	"go-shopping/lambler"
 	lHttp "go-shopping/lambler/http"
 	lTesting "go-shopping/lambler/testing"

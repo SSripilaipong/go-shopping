@@ -3,7 +3,7 @@ package create
 import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/stretchr/testify/assert"
-	gfun "go-shopping/go/func"
+	gfun "go-shopping/go/gfunc"
 	"go-shopping/lambler/repository/dynamodbrepository"
 	"go-shopping/tests/lambler/repository/dynamodbrepository/mock"
 	"testing"

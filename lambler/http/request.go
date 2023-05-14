@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	gfun "go-shopping/go/func"
+	gfun "go-shopping/go/gfunc"
 	"go-shopping/lambler"
 )
 

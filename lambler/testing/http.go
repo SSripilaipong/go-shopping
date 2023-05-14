@@ -3,7 +3,7 @@ package testing
 import (
 	"encoding/json"
 	"fmt"
-	gfun "go-shopping/go/func"
+	gfun "go-shopping/go/gfunc"
 	"go-shopping/lambler"
 	lHttp "go-shopping/lambler/http"
 )

@@ -2,7 +2,7 @@ package createNewItem
 
 import (
 	inventoryUsecase "go-shopping/app/core/inventory/usecase"
-	gfun "go-shopping/go/func"
+	gfun "go-shopping/go/gfunc"
 	lHttp "go-shopping/lambler/http"
 )
 

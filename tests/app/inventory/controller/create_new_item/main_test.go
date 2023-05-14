@@ -2,7 +2,6 @@ package create_new_item
 
 import (
 	"github.com/stretchr/testify/assert"
-	inventoryHttp "go-shopping/app/core/inventory/controller/http"
 	inventoryUsecase "go-shopping/app/core/inventory/usecase"
 	"go-shopping/lambler"
 	lTesting "go-shopping/lambler/testing"
@@ -22,9 +21,7 @@ func Test_should_return_status_created(t *testing.T) {
 
 func Test_should_execute_create_new_item_usecase_with_payload(t *testing.T) {
 	usecase := &mock.CreateNewItemUsecase{}
-	handler := controllerTest.NewHandlerWithInventoryDep(inventoryHttp.Dependency{
-		CreateNewItemUsecase: usecase.New(),
-	})
+	handler := controllerTest.NewHandlerWithCreateNewItemUsecase(usecase.New())
 
 	_, _ = doValidRequestWithPayload(handler, validPayload("Product A", "Good One", 999))
 
@@ -36,11 +33,9 @@ func Test_should_execute_create_new_item_usecase_with_payload(t *testing.T) {
 }
 
 func Test_should_respond_with_item_id(t *testing.T) {
-	handler := controllerTest.NewHandlerWithInventoryDep(inventoryHttp.Dependency{
-		CreateNewItemUsecase: (&mock.CreateNewItemUsecase{
-			WillReturn: inventoryUsecase.CreateNewItemResponse{Id: "INV-ITM-1234"},
-		}).New(),
-	})
+	handler := controllerTest.NewHandlerWithCreateNewItemUsecase((&mock.CreateNewItemUsecase{
+		WillReturn: inventoryUsecase.CreateNewItemResponse{Id: "INV-ITM-1234"},
+	}).New())
 
 	raw, _ := doValidRequest(handler)
 
@@ -50,11 +45,9 @@ func Test_should_respond_with_item_id(t *testing.T) {
 }
 
 func Test_should_validate_json_body(t *testing.T) {
-	handler := controllerTest.NewHandlerWithInventoryDep(inventoryHttp.Dependency{
-		CreateNewItemUsecase: (&mock.CreateNewItemUsecase{
-			WillReturn: inventoryUsecase.CreateNewItemResponse{Id: "INV-ITM-1234"},
-		}).New(),
-	})
+	handler := controllerTest.NewHandlerWithCreateNewItemUsecase((&mock.CreateNewItemUsecase{
+		WillReturn: inventoryUsecase.CreateNewItemResponse{Id: "INV-ITM-1234"},
+	}).New())
 
 	raw, _ := doValidRequestWithPayload(handler, lambler.Json{"a": 1, "b": "xxx"})
 

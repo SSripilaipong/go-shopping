@@ -6,5 +6,5 @@ import (
 )
 
 func NewAppHandler() lambler.Handler {
-	return appLambda.New(newDependency(newConfigFromEnvironment()))
+	return appLambda.NewFromConfig(newConfigFromEnvironment())
 }

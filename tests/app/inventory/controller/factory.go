@@ -1,7 +1,7 @@
 package controller
 
 import (
-	inventoryHttp "go-shopping/app/core/inventory/controller/http"
+	"go-shopping/app/core/inventory/inventoryController"
 	"go-shopping/app/core/inventory/usecase"
 	"go-shopping/app/lambda"
 	"go-shopping/lambler"
@@ -10,19 +10,17 @@ import (
 )
 
 func NewHandlerWithMocks() lambler.Handler {
-	handler := NewHandlerWithInventoryDep(
-		inventoryHttp.Dependency{
-			CreateNewItemUsecase: (&mock.CreateNewItemUsecase{
-				WillReturn: usecase.CreateNewItemResponse{Id: tests.RandomString(16)},
-			}).New(),
-		},
-	)
-	return handler
+	return NewHandlerWithInventoryDep(inventoryController.NewDependency(
+		(&mock.CreateNewItemUsecase{
+			WillReturn: usecase.CreateNewItemResponse{Id: tests.RandomString(16)},
+		}).New(),
+	))
 }
 
-func NewHandlerWithInventoryDep(inventoryDep inventoryHttp.Dependency) lambler.Handler {
-	handler := lambda.New(lambda.Dependency{
-		Inventory: inventoryDep,
-	})
-	return handler
+func NewHandlerWithInventoryDep(inventoryDep inventoryController.Dependency) lambler.Handler {
+	return lambda.New(inventoryDep)
+}
+
+func NewHandlerWithCreateNewItemUsecase(createNewItemUsecase usecase.CreateNewItemFunc) lambler.Handler {
+	return NewHandlerWithInventoryDep(inventoryController.NewDependency(createNewItemUsecase))
 }

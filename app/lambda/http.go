@@ -1,13 +1,15 @@
 package lambda
 
 import (
-	inventoryHttp "go-shopping/app/core/inventory/controller/http"
+	"go-shopping/go/gfunc"
 	"go-shopping/lambler"
 	lHttp "go-shopping/lambler/http"
 )
 
-func newHttpFilter(dep Dependency) lambler.Filter {
+func newHttpFilter(routers ...lHttp.Router) lambler.Filter {
 	filter := lHttp.NewFilter()
-	filter.Include(inventoryHttp.NewRouter(dep.Inventory))
+	gfun.ForEach(routers, func(router lHttp.Router) {
+		filter.Include(router)
+	})
 	return filter
 }
