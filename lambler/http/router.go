@@ -9,14 +9,18 @@ type router struct {
 	routes []route
 }
 
+type route struct {
+	handler Handler
+}
+
 func NewRouter() Router {
 	return &router{}
 }
 
 func (r *router) HandlerFor(*Request) Handler {
-	for _, route := range r.routes {
+	for _, t := range r.routes {
 		return func(request *Request) LambdaResponseBuilder {
-			return route.handler(request)
+			return t.handler(request)
 		}
 	}
 	return nil

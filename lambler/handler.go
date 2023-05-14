@@ -2,7 +2,7 @@ package lambler
 
 import "context"
 
-type Handler func(ctx context.Context, event any) (any, error)
+type Handler = func(ctx context.Context, event any) (any, error)
 
 func New(filters []Filter) Handler {
 	return func(ctx context.Context, event any) (any, error) {

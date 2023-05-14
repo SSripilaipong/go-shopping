@@ -3,7 +3,6 @@ package http
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	gfun "go-shopping/go/gfunc"
 	"go-shopping/lambler"
 )
@@ -44,17 +43,17 @@ func JsonBody[T any](request *Request, target *T) Error {
 	return nil
 }
 
-func NewRequest(_ context.Context, event any) (*Request, error) {
+func NewRequest(_ context.Context, event any) (*Request, bool) {
 	eventJson, isJson := event.(lambler.Json)
 	if !isJson {
-		return nil, fmt.Errorf("invalid event type")
+		return nil, false
 	}
 
 	unmarshalledEvent, err := validateEvent(eventJson)
 	if err != nil {
-		return nil, err
+		return nil, false
 	}
-	return &Request{event: unmarshalledEvent}, nil
+	return &Request{event: unmarshalledEvent}, true
 }
 
 func validateEvent(eventJson lambler.Json) (*LambdaFunctionURLRequest, error) {
