@@ -1,4 +1,4 @@
-package dynamodbrepository
+package ddbrepo
 
 import (
 	"github.com/aws/aws-sdk-go/aws"

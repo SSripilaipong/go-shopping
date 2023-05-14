@@ -4,8 +4,8 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/stretchr/testify/assert"
 	gfun "go-shopping/go/gfunc"
-	"go-shopping/lambler/repository/dynamodbrepository"
-	"go-shopping/tests/lambler/repository/dynamodbrepository/mock"
+	"go-shopping/lambler/repository/ddbrepo"
+	"go-shopping/tests/lambler/repository/ddbrepo/mock"
 	"testing"
 )
 
@@ -16,7 +16,7 @@ func Test_should_put_marshalled_item(t *testing.T) {
 		B  int
 	}
 	client := &mock.DynamodbClient{}
-	repo := dynamodbrepository.NewSingleKeyTableWithClient[*Entity](client, "my-table").Repository()
+	repo := ddbrepo.NewSingleKeyTableWithClient[*Entity](client, "my-table").Repository()
 	_ = repo.Create(func() *Entity {
 		return &Entity{
 			Id: "1234",

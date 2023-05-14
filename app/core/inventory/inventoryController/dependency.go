@@ -5,7 +5,7 @@ import (
 	"go-shopping/app/core/inventory/domain"
 	"go-shopping/app/core/inventory/inventoryController/inventoryHttp"
 	"go-shopping/app/core/inventory/usecase"
-	"go-shopping/lambler/repository/dynamodbrepository"
+	"go-shopping/lambler/repository/ddbrepo"
 )
 
 type Dependency struct {
@@ -23,7 +23,7 @@ func NewDependency(createNewItemUsecase usecase.CreateNewItemFunc) Dependency {
 func NewRuntimeDependency(config *Config) Dependency {
 	return NewDependency(
 		usecase.CreateNewItem(
-			dynamodbrepository.NewSingleKeyTable[*domain.Item](config.ItemTableName).Repository(),
+			ddbrepo.NewSingleKeyTable[*domain.Item](config.ItemTableName).Repository(),
 			adapter.GenerateItemId,
 		),
 	)
