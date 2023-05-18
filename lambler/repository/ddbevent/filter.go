@@ -2,6 +2,8 @@ package ddbevent
 
 import (
 	"context"
+	"fmt"
+	gfun "go-shopping/go/gfunc"
 	"go-shopping/lambler"
 	"go-shopping/lambler/base/extensiblefilter"
 )
@@ -15,8 +17,19 @@ func NewFilter() Filter {
 	return extensiblefilter.New[*Record, Handler, Router](newRecord, buildHandler)
 }
 
-func newRecord(context.Context, any) (*Record, bool) {
-	return &Record{}, true
+func newRecord(_ context.Context, event any) (*Record, bool) {
+	mapEvent, ok := event.(map[string]any)
+	if !ok {
+		panic(fmt.Errorf("unhandled error"))
+	}
+
+	var parsedEvent dynamoDBEvent
+	err := gfun.UnmarshalFromMap(mapEvent, &parsedEvent)
+	if err != nil {
+		panic(fmt.Errorf("unhandled error"))
+	}
+
+	return &Record{newImage: parsedEvent.Records[0].Change.NewImage}, true
 }
 
 func buildHandler(handler Handler) func(request *Record) (any, error) {
